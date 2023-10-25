@@ -1,0 +1,14 @@
+name: build test
+on:
+ pull_request:
+    branches: [ main ]
+ push:
+    branches: [ main ]
+jobs:
+ build_and_test:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checking out
+      uses: actions/checkout@v3
+    - name: Building
+      uses: roboware-org/roboware-ci@v2
