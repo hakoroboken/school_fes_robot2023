@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="3">
+  <name>manual_mode_common</name>
+  <version>1.0.0</version>
+  <description>The manual_mode_common</description>
+  <maintainer email="ttttghghnb554z@outlook.jp">Taiga Takano</maintainer>
+  <license>Apache License 2.0</license>
+
+  <depend>actuator_control_msgs</depend>
+  <depend>remote_control_msgs</depend>
+
+  <test_depend>ament_lint_auto</test_depend>
+  <test_depend>ament_lint_common</test_depend>
+
+  <export>
+    <build_type>ament_cargo</build_type>
+  </export>
+</package>

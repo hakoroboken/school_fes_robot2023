@@ -1,0 +1,17 @@
+[package]
+name = "manual_mode_common"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+safe_drive = "0.2"
+actuator_control_msgs = {path = "./.msg/actuator_control_msgs"}
+remote_control_msgs = {path = "./.msg/remote_control_msgs"}
+ros2_rust_util = {git = "https://github.com/TakanoTaiga/ros2_rust_util.git"}
+
+[package.metadata.ros]
+msg = ["actuator_control_msgs","remote_control_msgs"] 
+msg_dir = "./.msg/"
+safe_drive_version = "0.2"
