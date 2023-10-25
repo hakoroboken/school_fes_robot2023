@@ -1,0 +1,80 @@
+<launch>
+    
+    <!--pub</scgw/gamepad>-->
+    <include file="$(find-pkg-share roboware_launch)/launch/scgw.launch.xml"/>
+
+    <include file="$(find-pkg-share roboware_launch)/launch/mecanum.launch.xml"/>
+    
+    <!--machine-->
+    <node pkg="manual_mode_common" exec="single_axis" name="updown">
+        <remap from="manual_input" to="/scgw/gamepad" />
+        <remap from="single_axis" to="/motor_control/updown" />
+        <param name="get_value" value="y.joystic.left" />
+        <param name="reversal" value="false" />
+    </node>
+    <node pkg="manual_mode_common" exec="two_button" name="pendulum">
+        <remap from="/input" to="/scgw/gamepad" />
+        <remap from="/output" to="/motor_control/pendulum" />
+        <param name="posi_button" value="x" />
+        <param name="nega_button" value="y" />
+        <param name="plus_power_rate" value="1.0" />
+        <param name="minus_power_rate" value="1.0"/>
+    </node>
+    <node pkg="manual_mode_common" exec="constant_angle" name="through_string">
+        <remap from="/input" to="/scgw/gamepad" />
+        <remap from="/output" to="/motor_control/through_string" />
+        <param name="get_value" value="trigger.right" />
+        <param name="reversal" value="false" />
+        <param name="start_value" value="-1.0" />
+        <param name="end_value" value="1.0"/>
+    </node>
+    <node pkg="manual_mode_common" exec="two_button" name="lock">
+        <remap from="/input" to="/scgw/gamepad" />
+        <remap from="/output" to="/motor_control/lock" />
+        <param name="posi_button" value="b" />
+        <param name="nega_button" value="a" />
+        <param name="plus_power_rate" value="1.0" />
+        <param name="minus_power_rate" value="1.0"/>
+    </node>
+
+
+    <node pkg="motor_control_common" exec="mc_single_axis" name="mc_updown" >
+        <remap from="input_axis" to="/motor_control/updown" />
+        <remap from="raw_motor" to="/machine/updown" />
+    </node>
+    <node pkg="motor_control_common" exec="mc_single_axis" name="mc_pendulum" >
+        <remap from="input_axis" to="/motor_control/pendulum" />
+        <remap from="raw_motor" to="/machine/pendulum" />
+    </node>
+    <node pkg="motor_control_common" exec="mc_single_axis" name="mc_through_string" >
+        <remap from="input_axis" to="/motor_control/through_string" />
+        <remap from="raw_motor" to="/machine/through_string" />
+    </node>
+    <node pkg="motor_control_common" exec="mc_single_axis" name="mc_lock" >
+        <remap from="input_axis" to="/motor_control/lock" />
+        <remap from="raw_motor" to="/machine/iris" />
+    </node>
+
+
+    <node pkg="motor_control_common" exec="mc_merger" name="mc_merger_machine">
+        <remap from="raw_motor_0" to="/machine/updown" />
+        <remap from="raw_motor_1" to="/machine/pendulum" />
+        <remap from="raw_motor_2" to="/machine/through_string" />
+        <remap from="raw_motor_3" to="/machine/lock" />
+        <remap from="motor_contorl" to="/rc_command/machine" />
+    </node>
+
+    <node pkg="mdc_transporter" exec="mdc_transporter_node" name="mdc_transporter_machine">
+        <remap from="serial_write" to="serial_write/machine" />
+        <remap from="rc_command" to="/rc_command/machine" />
+    </node>
+
+    <node pkg="mdc_transporter" exec="mdc_transporter_node" name="mdc_transporter_wheel">
+        <remap from="serial_write" to="serial_write/wheel" />
+        <remap from="rc_command" to="/rc_command/wheel" />
+    </node>
+    
+    <!-- serial_bridge-->
+    <include file="$(find-pkg-share roboware_launch)/launch/double_serial_bridge.launch.xml"/>
+    
+</launch>

@@ -1,0 +1,3 @@
+float32 power
+float32 angle_degree
+bool enable_servo

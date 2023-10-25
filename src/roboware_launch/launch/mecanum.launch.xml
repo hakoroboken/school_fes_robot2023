@@ -1,0 +1,24 @@
+<launch>
+    <arg name="wheel_param_path" default="$(find-pkg-share roboware_launch)/config/wheel.param.yaml"/>
+
+    <node pkg="manual_mode_common" exec="another_wheel" name="another_mecanum">
+        <remap from="/input" to="/scgw/gamepad" />
+        <remap from="/output" to="/motor_control/mecanum_control" />
+        <param from="$(var wheel_param_path)"/>
+    </node>
+
+    <node pkg="motor_control_common" exec="mc_another_wheel" name="mc_another">
+        <remap from="/input" to="/motor_control/mecanum_control" />
+        <remap from="/output_fl" to="/wheel/motor_fl" />
+        <remap from="/output_fr" to="/wheel/motor_fr" />
+        <remap from="/output_ll" to="/wheel/motor_ll" />
+        <remap from="/output_lr" to="/wheel/motor_lr" />
+    </node>
+    <node pkg="motor_control_common" exec="mc_merger" name="mc_merger_wheel">
+        <remap from="raw_motor_0" to="/wheel/motor_fl" />
+        <remap from="raw_motor_1" to="/wheel/motor_fr" />
+        <remap from="raw_motor_2" to="/wheel/motor_ll" />
+        <remap from="raw_motor_3" to="/wheel/motor_lr" />
+        <remap from="motor_contorl" to="/rc_command/wheel" />
+    </node>
+</launch>

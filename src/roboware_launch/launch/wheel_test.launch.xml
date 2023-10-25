@@ -1,0 +1,18 @@
+<launch>
+
+    <include file="$(find-pkg-share roboware_launch)/launch/scgw.launch.xml"/>
+
+    <include file="$(find-pkg-share roboware_launch)/launch/mecanum.launch.xml"/>
+
+    <node pkg="mdc_transporter" exec="mdc_transporter_node" name="mdc_transporter_wheel">
+        <remap from="serial_write" to="serial_write/wheel" />
+        <remap from="rc_command" to="/rc_command/wheel" />
+        <param name="gain" value="0.1" />
+    </node>
+
+    <node pkg="safe_serial_bridge" exec="safe_serial_bridge" name="serial_bridge_wheel">
+        <remap from="serial_write" to="/serial_write/wheel" />
+        <param name="port" value="/dev/ttyACM0"/>
+        <param name="baud_late" value="115200" />
+    </node>
+</launch>

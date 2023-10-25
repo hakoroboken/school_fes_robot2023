@@ -1,0 +1,21 @@
+[package]
+name = "motor_control_common"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+safe_drive = "0.2"
+actuator_control_msgs = {path = "./.msg/actuator_control_msgs"}
+mc_msgs = {path = "./.msg/mc_msgs"}
+ros2_rust_util = {git = "https://github.com/TakanoTaiga/ros2_rust_util.git"}
+signal-hook = "0.3.4"
+signal-hook-async-std = "0.2"
+async-std = { version = "1", features = ["attributes"] }
+
+
+[package.metadata.ros]
+msg = ["actuator_control_msgs", "mc_msgs"] 
+msg_dir = "./.msg/"
+safe_drive_version = "0.2"

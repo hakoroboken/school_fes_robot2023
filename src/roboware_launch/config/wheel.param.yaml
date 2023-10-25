@@ -1,0 +1,10 @@
+/**:
+  ros__parameters:
+    right_name: right
+    left_name: left
+    front_name : up
+    back_name : down
+    rotation_name: x.joystic.right
+    move_no_accel_power: 0.5
+    rotation_power : 0.5
+    x_move_power : 0.5

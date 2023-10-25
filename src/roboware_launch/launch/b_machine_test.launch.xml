@@ -1,0 +1,68 @@
+<launch>
+    <arg name="iris_param_path" default="$(find-pkg-share roboware_launch)/config/iris.param.yaml"/>
+    <arg name="arm_param_path" default="$(find-pkg-share roboware_launch)/config/arm.param.yaml"/>
+    <arg name="caterpiller_param_path" default="$(find-pkg-share roboware_launch)/config/caterpiller.param.yaml"/>
+
+    <include file="$(find-pkg-share roboware_launch)/launch/scgw.launch.xml"/>
+
+    <node pkg="manual_mode_common" exec="single_axis" name="updown">
+        <remap from="manual_input" to="/scgw/gamepad" />
+        <remap from="single_axis" to="/motor_control/updown" />
+        <param name="get_value" value="y.joystic.left" />
+        <param name="reversal" value="false" />
+    </node>
+    <node pkg="manual_mode_common" exec="two_button" name="caterpillar">
+        <remap from="/input" to="/scgw/gamepad" />
+        <remap from="/output" to="/motor_control/caterpiller" />
+        <param from="$(var caterpiller_param_path)"/>
+    </node>
+    <node pkg="manual_mode_common" exec="two_button" name="otasuke">
+        <remap from="/input" to="/scgw/gamepad" />
+        <remap from="/output" to="/motor_control/arm" />
+        <param from="$(var arm_param_path)"/>
+    </node>
+    <node pkg="manual_mode_common" exec="two_button" name="iris">
+        <remap from="/input" to="/scgw/gamepad" />
+        <remap from="/output" to="/motor_control/iris" />
+        <param from="$(var iris_param_path)"/>
+    </node>
+
+
+    <node pkg="motor_control_common" exec="mc_single_axis" name="mc_updown" >
+        <remap from="input_axis" to="/motor_control/updown" />
+        <remap from="raw_motor" to="/machine/updown" />
+    </node>
+    <node pkg="motor_control_common" exec="mc_single_axis" name="mc_caterpiller" >
+        <remap from="input_axis" to="/motor_control/caterpiller" />
+        <remap from="raw_motor" to="/machine/caterpiller" />
+    </node>
+    <node pkg="motor_control_common" exec="mc_single_axis" name="mc_otasuke" >
+        <remap from="input_axis" to="/motor_control/arm" />
+        <remap from="raw_motor" to="/machine/arm" />
+    </node>
+    <node pkg="motor_control_common" exec="mc_single_axis" name="mc_iris" >
+        <remap from="input_axis" to="/motor_control/iris" />
+        <remap from="raw_motor" to="/machine/iris" />
+    </node>
+
+
+    <node pkg="motor_control_common" exec="mc_merger" name="mc_merger_machine">
+        <remap from="raw_motor_0" to="/machine/updown" />
+        <remap from="raw_motor_1" to="/machine/caterpiller" />
+        <remap from="raw_motor_2" to="/machine/arm" />
+        <remap from="raw_motor_3" to="/machine/iris" />
+        <remap from="motor_contorl" to="/rc_command/machine" />
+    </node>
+
+    <node pkg="mdc_transporter" exec="mdc_transporter_node" name="mdc_transporter_machine">
+        <remap from="serial_write" to="serial_write/machine" />
+        <remap from="rc_command" to="/rc_command/machine" />
+        <param name="gain" value="0.5" />
+    </node>
+
+    <node pkg="safe_serial_bridge" exec="safe_serial_bridge" name="serial_bridge_machine">
+        <remap from="serial_write" to="/serial_write/machine" />
+        <param name="port" value="/dev/ttyACM0"/>
+        <param name="baud_late" value="115200" />
+    </node>
+</launch>

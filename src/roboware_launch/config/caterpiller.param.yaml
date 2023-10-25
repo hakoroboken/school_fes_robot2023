@@ -1,0 +1,6 @@
+/**:
+  ros__parameters:
+    posi_button: "y"
+    nega_button: "x"
+    plus_power: 1.0 
+    minus_power: 0.8

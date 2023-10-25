@@ -1,0 +1,9 @@
+<launch>
+    <arg name="scgw_param_path" default="$(find-pkg-share roboware_launch)/config/scgw.param.yaml"/>
+    
+    <!-- safe smart controller gateway -->
+    <node pkg="safe_smart_controller_gateway" exec="scgw" ></node>
+    <node pkg="safe_smart_controller_gateway" exec="rc_msg_converter" >
+        <remap from="gamepad" to="/scgw/gamepad" />
+    </node>
+</launch>
