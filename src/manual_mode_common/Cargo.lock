@@ -329,19 +329,3 @@ checksum = "56c1936c4cc7a1c9ab21a1ebb602eb942ba868cbd44a99cb7cdc5892335e1c85"
 dependencies = [
  "linked-hash-map",
 ]
-
-[[patch.unused]]
-name = "joy_converter"
-version = "0.1.0"
-
-[[patch.unused]]
-name = "manual_mode_common"
-version = "0.1.0"
-
-[[patch.unused]]
-name = "motor_control_common"
-version = "0.1.0"
-
-[[patch.unused]]
-name = "safe_serial_bridge"
-version = "0.1.0"

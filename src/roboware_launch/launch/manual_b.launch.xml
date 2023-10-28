@@ -6,13 +6,21 @@
     <!--pub</scgw/gamepad>-->
     <include file="$(find-pkg-share roboware_launch)/launch/scgw.launch.xml"/>
 
-    <include file="$(find-pkg-share roboware_launch)/launch/mecanum.launch.xml"/>
+    <node pkg="manual_mode_common" exec="no_accel_wheel" name="no_accel_wheel">
+        <remap from="manual_input" to="/scgw/gamepad"/>
+        <remap from="mecanum_wheel" to="/motor_control/mecanum_control"/>
+        <param name="x_name" value="x.joystic.left"/>
+        <param name="y_name" value="x.joystic.right"/>
+        <param name="rotation_name" value="y.joystic.left"/>
+        <param name="power" value="0.25"/>
+        
+    </node>
     
     <!--machine-->
     <node pkg="manual_mode_common" exec="single_axis" name="updown">
         <remap from="manual_input" to="/scgw/gamepad" />
         <remap from="single_axis" to="/motor_control/updown" />
-        <param name="get_value" value="y.joystic.left" />
+        <param name="get_value" value="dpad" />
         <param name="reversal" value="false" />
     </node>
     <node pkg="manual_mode_common" exec="two_button" name="caterpillar">
@@ -56,6 +64,20 @@
         <remap from="raw_motor_2" to="/machine/arm" />
         <remap from="raw_motor_3" to="/machine/iris" />
         <remap from="motor_contorl" to="/rc_command/machine" />
+    </node>
+    <node pkg="motor_control_common" exec="mc_mecanum_wheel" name="mc_mecanum">
+        <remap from="manual_input" to="/motor_control/mecanum_control" />
+        <remap from="/raw_motor_fl" to="/wheel/motor_fl" />
+        <remap from="/raw_motor_fr" to="/wheel/motor_fr" />
+        <remap from="/raw_motor_rl" to="/wheel/motor_rl" />
+        <remap from="/raw_motor_rr" to="/wheel/motor_rr" />
+    </node>
+    <node pkg="motor_control_common" exec="mc_merger" name="mc_merger_wheel">
+        <remap from="raw_motor_0" to="/wheel/motor_fl" />
+        <remap from="raw_motor_1" to="/wheel/motor_fr" />
+        <remap from="raw_motor_2" to="/wheel/motor_rl" />
+        <remap from="raw_motor_3" to="/wheel/motor_rr" />
+        <remap from="motor_contorl" to="/rc_command/wheel" />
     </node>
    
     

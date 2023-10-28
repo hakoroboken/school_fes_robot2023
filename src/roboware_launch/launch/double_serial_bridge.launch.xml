@@ -5,11 +5,13 @@
 
     <node pkg="safe_serial_bridge" exec="safe_serial_bridge" name="serial_bridge_wheel">
         <remap from="serial_write" to="/serial_write/wheel" />
+        <remap from="serial_read" to="serial_read"/>
         <param from="$(var serial_wheel_param_path)"/>
     </node>
 
     <node pkg="safe_serial_bridge" exec="safe_serial_bridge" name="serial_bridge_machine">
         <remap from="serial_write" to="/serial_write/machine" />
+        <remap from="serial_read" to="serial_read"/>
         <param from="$(var serial_machine_param_path)"/>
     </node>
 
