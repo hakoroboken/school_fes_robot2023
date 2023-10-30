@@ -52,10 +52,10 @@ fn main() -> Result<(), DynError> {
                 -0.707106781 * msg.vec_x - 0.707106781 * msg.vec_y + msg.rotation_power;
             send_msg_lr.power =
                 -0.707106781 * msg.vec_x - 0.707106781 * msg.vec_y - msg.rotation_power;
-            send_msg_fl.power *= -1.0;
-            send_msg_fr.power *= -1.0;
-            send_msg_ll.power *= -1.0;
-            send_msg_lr.power *= -1.0;
+            send_msg_fl.power *= 1.0;
+            send_msg_fr.power *= 1.0;
+            send_msg_ll.power *= 1.0;
+            send_msg_lr.power *= 1.0;
             let _ = publisher_fl.send(&send_msg_fl);
             let _ = publisher_fr.send(&send_msg_fr);
             let _ = publisher_ll.send(&send_msg_ll);
