@@ -3,6 +3,9 @@
     <arg name="arm_param_path" default="$(find-pkg-share roboware_launch)/config/arm.param.yaml"/>
     <arg name="caterpiller_param_path" default="$(find-pkg-share roboware_launch)/config/caterpiller.param.yaml"/>
 
+    <!-- sensor -->
+    <include file="$(find-pkg-share haya_imu_ros2)/launch/haya_imu_launch.py"/>
+    <include file="$(find-pkg-share haya_imu_ros2)/launch/haya_topic_echo_launch.py"/>
     <!--pub</scgw/gamepad>-->
     <include file="$(find-pkg-share roboware_launch)/launch/scgw.launch.xml"/>
 
